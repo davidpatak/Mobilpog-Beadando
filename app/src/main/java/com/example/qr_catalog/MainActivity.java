@@ -22,12 +22,19 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE_LOCATION_PERMISSION = 1;
     private TextView textLatLong;
     private TextView textAddress;
     private ProgressBar progressBar;
+
 
     @SuppressLint("StaticFieldLeak")
     public static TextView resulttextview;
@@ -111,6 +118,22 @@ public class MainActivity extends AppCompatActivity {
     }
     private void getCurrentLocation() {
 
+        final Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd/HH:mm:ss");
+        final String dateTime = simpleDateFormat.format(calendar.getTime());
+
+        String valid_until = "2020/10/05/17:05:00";
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/HH:mm:ss");
+        Date strDate = null;
+        try {
+            strDate = sdf.parse(valid_until);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
+
         progressBar.setVisibility(View.VISIBLE);
 
         LocationRequest locationRequest = new LocationRequest();
@@ -122,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
 
             return;
         }
+        final Date finalStrDate = strDate;
         LocationServices.getFusedLocationProviderClient(MainActivity.this)
                 .requestLocationUpdates(locationRequest, new LocationCallback() {
 
@@ -140,14 +164,28 @@ public class MainActivity extends AppCompatActivity {
                                     )
                             );
                             if (latitude > 47.086044 && latitude < 47.091333 && longitude > 17.906985 && longitude < 17.911985) {
-                                textAddress.setText(
-                                        String.format("Bent vagy")
-                                );
+                                if (new Date().after(finalStrDate)) {
+                                    textAddress.setText(
+                                            String.format("Bent vagy, de későn\n")+dateTime);
+
+                                }
+                                else {
+                                    textAddress.setText(
+                                            String.format("Bent vagy\n")+dateTime);
+                                }
+
+
 
                             } else {
-                                textAddress.setText(
-                                        String.format("Nem vagy bent")
-                                );
+                                if (new Date().after(finalStrDate)) {
+                                    textAddress.setText(
+                                            String.format("Nem vagy bent és késtél is\n")+dateTime);
+
+                                }
+                                else {
+                                    textAddress.setText(
+                                            String.format("Nem vagy bent\n")+dateTime);
+                                }
                             }
                         }
 
