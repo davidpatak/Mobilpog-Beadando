@@ -11,7 +11,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:text="Üdvözölek a QR-Catalog-ban!."
         android:id="@+id/qrcodetextview"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -28,7 +28,7 @@
         android:id="@+id/buttonresult"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/result" />
+        android:text="Feliratkozás" />
 
     <Button
         android:id="@+id/buttonGetCurrentLocation"

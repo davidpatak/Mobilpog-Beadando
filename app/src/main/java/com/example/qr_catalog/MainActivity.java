@@ -35,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView textAddress;
     private ProgressBar progressBar;
 
+    String valid_until = "2020/10/05/17:05:00";
+    int scantimes = 0;
+
 
     @SuppressLint("StaticFieldLeak")
     public static TextView resulttextview;
@@ -79,6 +82,26 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(),ScanCodeActivity.class));
+                scantimes = scantimes+1;
+
+
+            }
+
+        });
+
+
+
+        result_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (scantimes == 0) {
+                    Toast.makeText(MainActivity.this, "Engedély megtagadva", Toast.LENGTH_SHORT).show();
+                }else {
+
+                String input = (String) resulttextview.getText();
+
+                valid_until = input.substring(input.length()-19,input.length());
+
 
                 if (ContextCompat.checkSelfPermission(
                         getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION
@@ -91,16 +114,8 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     getCurrentLocation();
                 }
-            }
 
-        });
-
-        result_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this,resulttextview.getText(),Toast.LENGTH_SHORT).show();
-
-            }
+            }}
         });
 
 
@@ -122,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd/HH:mm:ss");
         final String dateTime = simpleDateFormat.format(calendar.getTime());
 
-        String valid_until = "2020/10/05/17:05:00";
+
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/HH:mm:ss");
         Date strDate = null;
