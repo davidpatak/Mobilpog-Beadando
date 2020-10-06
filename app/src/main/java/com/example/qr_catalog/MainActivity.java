@@ -206,20 +206,16 @@ public class MainActivity extends AppCompatActivity {
                             int latestLocationIndex = locationResult.getLocations().size() - 1;
                             double latitude = locationResult.getLocations().get(latestLocationIndex).getLatitude();
                             double longitude = locationResult.getLocations().get(latestLocationIndex).getLongitude();
-                            textLatLong.setText(
-                                    String.format(
-                                            "Latitude: %s \nLongitude: %s",latitude,longitude
-                                    )
-                            );
+                            //textLatLong.setText(String.format("Latitude: %s \nLongitude: %s",latitude,longitude));
                             if (latitude > 47.086044 && latitude < 47.091333 && longitude > 17.906985 && longitude < 17.911985) {
                                 if (new Date().after(finalStrDate)) {
                                     textAddress.setText(
-                                            String.format("Bent vagy, de későn\n")+dateTime);
+                                            String.format("Lekésted az órát!\n"));
 
                                 }
                                 else {
                                     textAddress.setText(
-                                            String.format("Bent vagy\n")+dateTime);
+                                            String.format("Sikeresen feliratkoztál a katalógusra!\n"));
                                 }
 
 
@@ -227,12 +223,12 @@ public class MainActivity extends AppCompatActivity {
                             } else {
                                 if (new Date().after(finalStrDate)) {
                                     textAddress.setText(
-                                            String.format("Nem vagy bent és késtél is\n")+dateTime);
+                                            String.format("Nem vagy az egyetem területén, de már ne indulj sehova!\nAz óra végetért. "));
 
                                 }
                                 else {
                                     textAddress.setText(
-                                            String.format("Nem vagy bent\n")+dateTime);
+                                            String.format("Nem vagy az egyetem területén!\n"));
                                 }
                             }
                         }
