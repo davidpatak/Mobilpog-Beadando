@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Looper;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -22,11 +23,16 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 
-import java.text.DateFormat;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
+
+import android.content.Context;
+import android.content.SharedPreferences;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,6 +40,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView textLatLong;
     private TextView textAddress;
     private ProgressBar progressBar;
+
+
+
 
     String valid_until = "2020/10/05/17:05:00";
     int scantimes = 0;
@@ -43,7 +52,31 @@ public class MainActivity extends AppCompatActivity {
     public static TextView resulttextview;
     Button scan_btn, result_btn;
 
+    String prevStarted = "prevStarted";
 
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences sharedpreferences = getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE);
+        if (!sharedpreferences.getBoolean(prevStarted, false)) {
+
+
+            //TODO:: Első inditáskor csinálja ezt ide kell egy neptun kod bekérő
+
+
+
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putBoolean(prevStarted, Boolean.TRUE);
+            editor.apply();
+
+        } else {
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putBoolean(prevStarted, Boolean.TRUE);
+            editor.apply();
+        }
+    }
 
 
     @Override
