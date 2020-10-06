@@ -25,6 +25,19 @@
         android:textColor="#fff"
         android:textSize="75px" />
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="125dp" />
+
+    <TextView
+        android:id="@+id/neptun"
+        android:layout_width="match_parent"
+        android:layout_height="122dp"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="28sp"
+        android:textStyle="bold" />
+
     <Button
         android:id="@+id/buttonscan"
         android:textColor="#fff"

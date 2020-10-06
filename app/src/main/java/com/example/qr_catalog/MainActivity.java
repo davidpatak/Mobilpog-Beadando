@@ -1,12 +1,14 @@
 package com.example.qr_catalog;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -14,6 +16,7 @@ import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,18 +45,16 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar progressBar;
 
 
-
-
     String valid_until = "2020/10/05/17:05:00";
     int scantimes = 0;
 
 
     @SuppressLint("StaticFieldLeak")
-    public static TextView resulttextview;
+    public static TextView resulttextview, neptuntext;
     Button scan_btn, result_btn;
 
     String prevStarted = "prevStarted";
-
+    String neptunkod = "Nkod";
 
 
     @Override
@@ -62,13 +63,32 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedpreferences = getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE);
         if (!sharedpreferences.getBoolean(prevStarted, false)) {
 
-
-            //TODO:: Első inditáskor csinálja ezt ide kell egy neptun kod bekérő
-
-
-
+            // Innentől az én szerencsétlenkedésem
+            final EditText nk = new EditText(this);
+            nk.setHint("Neptun kód pl.: KGLGRA");
+            new AlertDialog.Builder(this)
+                    .setTitle("NEPTUN")
+                    .setMessage("Add meg a neptun kódodat!")
+                    .setView(nk)
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            String input = nk.getText().toString();
+                            nk.setText(input);
+                        }
+                    })
+                    .setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            finish();
+                            System.exit(0);
+                        }
+                    })
+                    .show();
+            // Idáig az én szerencsétlenkedésem
             SharedPreferences.Editor editor = sharedpreferences.edit();
             editor.putBoolean(prevStarted, Boolean.TRUE);
+            //ez is
+            editor.putString(neptunkod, nk.getText().toString());
+            //idáig
             editor.apply();
 
         } else {
@@ -85,6 +105,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         resulttextview = findViewById(R.id.qrcodetextview);
+        //Test
+        //neptuntext = findViewById(R.id.neptun);
+        //SharedPreferences sharedpreferences = getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE);
+        //neptuntext.setText(sharedpreferences.getString(neptunkod, "Nkod"));
+        //---idáig
         scan_btn = findViewById(R.id.buttonscan);
         result_btn = findViewById(R.id.buttonresult);
 
