@@ -10,6 +10,12 @@
     tools:context=".MainActivity">
 
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="130dp"
+        android:layout_height="174dp"
+        app:srcCompat="@drawable/headlogo" />
+
     <TextView
         android:id="@+id/header"
         android:layout_width="match_parent"
