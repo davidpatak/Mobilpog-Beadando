@@ -5,27 +5,35 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:gravity="center"
+    android:background="#3a14ba"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+
     <TextView
-    android:id="@+id/header"
-    android:layout_width="200dp"
-    android:layout_height="wrap_content"
-    android:text="Üdvözölek a QR-Catalog-ban!."
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="189dp"
+        android:text="Üdvözölek a QR-Catalog-ban!."
+        android:textAlignment="center"
+        android:textColor="#fff"
+        android:textSize="75px" />
 
     <Button
         android:id="@+id/buttonscan"
+        android:textColor="#fff"
+        android:background="#3d449a"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Beolvasás" />
 
     <TextView
         android:id="@+id/qrcodetextview"
+        android:textColor="#fff"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Itt fognak megjelenni a kurzus adatok beolvasás után!"
@@ -37,16 +45,17 @@
 
     <Button
         android:id="@+id/buttonresult"
+        android:textColor="#fff"
+        android:background="#3d449a"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Feliratkozás" />
 
-    <Button
-        android:id="@+id/buttonGetCurrentLocation"
-        style="@style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="GPS"/>
+
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -57,11 +66,12 @@
 
     <TextView
         android:id="@+id/textLatLong"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:gravity="center"
-        android:textColor="@android:color/black"
+        android:textColor="#fff"
         android:textSize="16dp"
         android:textStyle="bold"/>
 
@@ -72,7 +82,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:gravity="center"
-        android:textColor="@android:color/black"
+        android:textColor="#fff"
         android:textSize="16dp"
         android:textStyle="bold"/>
 

@@ -92,24 +92,7 @@ public class MainActivity extends AppCompatActivity {
         textAddress = findViewById(R.id.textAddress);
         progressBar = findViewById(R.id.progressBar);
 
-        findViewById(R.id.buttonGetCurrentLocation).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (ContextCompat.checkSelfPermission(
-                        getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(
-                            MainActivity.this,
-                            new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                            REQUEST_CODE_LOCATION_PERMISSION
-                    );
-                } else {
-                    getCurrentLocation();
-                }
 
-
-            }
-        });
 
         scan_btn.setOnClickListener(new View.OnClickListener() {
             @Override
