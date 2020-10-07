@@ -25,6 +25,8 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 
 import java.text.ParseException;
@@ -228,6 +230,7 @@ public class MainActivity extends AppCompatActivity {
                             double longitude = locationResult.getLocations().get(latestLocationIndex).getLongitude();
                             SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
                             neptunkod = sharedPreferences.getString(nkod, "BATMAN");
+
                             //textLatLong.setText(String.format("Latitude: %s \nLongitude: %s",latitude,longitude));
                             if (latitude > 47.086044 && latitude < 47.091333 && longitude > 17.906985 && longitude < 17.911985) {
                                 if (new Date().after(finalStrDate)) {
@@ -238,6 +241,10 @@ public class MainActivity extends AppCompatActivity {
                                 else {
                                     textAddress.setText(
                                             String.format("Sikeresen feliratkoztál a katalógusra!\n")+neptunkod);
+                                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                                    DatabaseReference myRef = database.getReference("message");
+
+                                    myRef.setValue(neptunkod);
                                 }
 
 
@@ -251,6 +258,9 @@ public class MainActivity extends AppCompatActivity {
                                 else {
                                     textAddress.setText(
                                             String.format("Nem vagy az egyetem területén!\n")+neptunkod);
+                                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                                    DatabaseReference myRef = database.getReference("message");
+                                    myRef.setValue(neptunkod);
                                 }
                             }
                         }
