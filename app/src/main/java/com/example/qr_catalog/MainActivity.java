@@ -48,13 +48,17 @@ public class MainActivity extends AppCompatActivity {
     String valid_until = "2020/10/05/17:05:00";
     int scantimes = 0;
 
+    private String neptunkod;
+
 
     @SuppressLint("StaticFieldLeak")
     public static TextView resulttextview, neptuntext;
     Button scan_btn, result_btn;
 
+    public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String nkod ="BATMAN";
+
     String prevStarted = "prevStarted";
-    String neptunkod = "Nkod";
 
 
     @Override
@@ -64,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
         if (!sharedpreferences.getBoolean(prevStarted, false)) {
 
             // Innentől az én szerencsétlenkedésem
+
             final EditText nk = new EditText(this);
             nk.setHint("Neptun kód pl.: KGLGRA");
             new AlertDialog.Builder(this)
@@ -73,6 +78,13 @@ public class MainActivity extends AppCompatActivity {
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
                             String input = nk.getText().toString();
+                            SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                            editor.putString(nkod,nk.getText().toString());
+
+                            editor.apply();
+
                             nk.setText(input);
                         }
                     })
@@ -214,16 +226,18 @@ public class MainActivity extends AppCompatActivity {
                             int latestLocationIndex = locationResult.getLocations().size() - 1;
                             double latitude = locationResult.getLocations().get(latestLocationIndex).getLatitude();
                             double longitude = locationResult.getLocations().get(latestLocationIndex).getLongitude();
+                            SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+                            neptunkod = sharedPreferences.getString(nkod, "BATMAN");
                             //textLatLong.setText(String.format("Latitude: %s \nLongitude: %s",latitude,longitude));
                             if (latitude > 47.086044 && latitude < 47.091333 && longitude > 17.906985 && longitude < 17.911985) {
                                 if (new Date().after(finalStrDate)) {
                                     textAddress.setText(
-                                            String.format("Lekésted az órát!\n"));
+                                            String.format("Lekésted az órát!\n")+neptunkod);
 
                                 }
                                 else {
                                     textAddress.setText(
-                                            String.format("Sikeresen feliratkoztál a katalógusra!\n"));
+                                            String.format("Sikeresen feliratkoztál a katalógusra!\n")+neptunkod);
                                 }
 
 
@@ -231,12 +245,12 @@ public class MainActivity extends AppCompatActivity {
                             } else {
                                 if (new Date().after(finalStrDate)) {
                                     textAddress.setText(
-                                            String.format("Nem vagy az egyetem területén, de már ne indulj sehova!\nAz óra végetért. "));
+                                            String.format("Nem vagy az egyetem területén, de már ne indulj sehova!\nAz óra végetért. ")+neptunkod);
 
                                 }
                                 else {
                                     textAddress.setText(
-                                            String.format("Nem vagy az egyetem területén!\n"));
+                                            String.format("Nem vagy az egyetem területén!\n")+neptunkod);
                                 }
                             }
                         }
