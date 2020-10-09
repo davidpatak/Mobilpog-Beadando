@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     String valid_until = "2020/10/05/17:05:00";
+    String send;
     int scantimes = 0;
 
     private String neptunkod;
@@ -63,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
     String prevStarted = "prevStarted";
 
 
+
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -72,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
             // Innentől az én szerencsétlenkedésem
 
             final EditText nk = new EditText(this);
-            nk.setHint("Neptun kód pl.: KGLGRA");
+            nk.setHint("Neptun kód pl.: BATMAN");
             new AlertDialog.Builder(this)
                     .setTitle("NEPTUN")
                     .setMessage("Add meg a neptun kódodat!")
@@ -97,12 +100,12 @@ public class MainActivity extends AppCompatActivity {
                         }
                     })
                     .show();
-            // Idáig az én szerencsétlenkedésem
+
             SharedPreferences.Editor editor = sharedpreferences.edit();
             editor.putBoolean(prevStarted, Boolean.TRUE);
-            //ez is
+
             editor.putString(neptunkod, nk.getText().toString());
-            //idáig
+
             editor.apply();
 
         } else {
@@ -119,11 +122,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         resulttextview = findViewById(R.id.qrcodetextview);
-        //Test
-        //neptuntext = findViewById(R.id.neptun);
-        //SharedPreferences sharedpreferences = getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE);
-        //neptuntext.setText(sharedpreferences.getString(neptunkod, "Nkod"));
-        //---idáig
+
         scan_btn = findViewById(R.id.buttonscan);
         result_btn = findViewById(R.id.buttonresult);
 
@@ -154,6 +153,8 @@ public class MainActivity extends AppCompatActivity {
                 }else {
 
                 String input = (String) resulttextview.getText();
+
+                send = input;
 
                 valid_until = input.substring(input.length()-19,input.length());
 
@@ -216,6 +217,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         final Date finalStrDate = strDate;
+
         LocationServices.getFusedLocationProviderClient(MainActivity.this)
                 .requestLocationUpdates(locationRequest, new LocationCallback() {
 
@@ -231,6 +233,12 @@ public class MainActivity extends AppCompatActivity {
                             SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
                             neptunkod = sharedPreferences.getString(nkod, "BATMAN");
 
+                            //.substring(input.length()-19,input.length());
+
+                            send = send.substring(0,11)+"/"+send.substring(12,14)+"/"+neptunkod;
+
+
+
                             //textLatLong.setText(String.format("Latitude: %s \nLongitude: %s",latitude,longitude));
                             if (latitude > 47.086044 && latitude < 47.091333 && longitude > 17.906985 && longitude < 17.911985) {
                                 if (new Date().after(finalStrDate)) {
@@ -242,9 +250,11 @@ public class MainActivity extends AppCompatActivity {
                                     textAddress.setText(
                                             String.format("Sikeresen feliratkoztál a katalógusra!\n")+neptunkod);
                                     FirebaseDatabase database = FirebaseDatabase.getInstance();
-                                    DatabaseReference myRef = database.getReference("message");
+                                    DatabaseReference myRef = database.getReference(send);
 
-                                    myRef.setValue(neptunkod);
+
+
+                                    myRef.setValue("Sikeres feliratkozás");
                                 }
 
 
@@ -258,9 +268,7 @@ public class MainActivity extends AppCompatActivity {
                                 else {
                                     textAddress.setText(
                                             String.format("Nem vagy az egyetem területén!\n")+neptunkod);
-                                    FirebaseDatabase database = FirebaseDatabase.getInstance();
-                                    DatabaseReference myRef = database.getReference("message");
-                                    myRef.setValue(neptunkod);
+
                                 }
                             }
                         }
