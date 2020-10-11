@@ -3,12 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:background="#3a14ba"
     android:layout_height="match_parent"
+    android:background="#3a14ba"
+    android:gravity="center|top|center_vertical"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|top"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/dialog_language"
+            android:layout_width="wrap_content"
+            android:layout_height="37dp"
+            android:backgroundTint="#3d449a"
+            android:text="@string/nyelv_v_ltoztat_sa"
+            android:textColor="#FFFFFF"
+            android:textSize="10sp" />
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/imageView"
@@ -19,31 +35,31 @@
     <TextView
         android:id="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="189dp"
-        android:text="Üdvözölek a QR-Catalog-ban!"
+        android:layout_height="111dp"
+        android:text="@string/dv_z_lek_a_qr_catalog_ban"
         android:textAlignment="center"
         android:textColor="#fff"
         android:textSize="75px" />
 
     <Button
         android:id="@+id/buttonscan"
-        android:textColor="#fff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="#3d449a"
         android:shadowColor="#A8A8A8"
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Beolvasás" />
+        android:text="@string/beolvas_s"
+        android:textColor="#fff" />
 
     <TextView
         android:id="@+id/qrcodetextview"
-        android:textColor="#fff"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Itt fognak megjelenni a kurzus adatok beolvasás után!"
+        android:text="@string/itt_fognak_megjelenni_a_kurzus_adatok_beolvas_s_ut_n"
         android:textAlignment="center"
+        android:textColor="#fff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -51,16 +67,15 @@
 
     <Button
         android:id="@+id/buttonresult"
-        android:textColor="#fff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="#3d449a"
         android:shadowColor="#A8A8A8"
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Feliratkozás" />
-
+        android:text="@string/feliratkoz_s"
+        android:textColor="#fff" />
 
 
     <ProgressBar
@@ -68,7 +83,7 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginTop="10dp"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/textLatLong"
@@ -79,7 +94,7 @@
         android:gravity="center"
         android:textColor="#fff"
         android:textSize="16dp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/textAddress"
@@ -90,6 +105,6 @@
         android:gravity="center"
         android:textColor="#fff"
         android:textSize="16dp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
 </LinearLayout>

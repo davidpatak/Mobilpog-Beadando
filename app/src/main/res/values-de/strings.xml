@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">QR-Catalog</string>
+    <string name="scan">QR-Code scannen</string>
+    <string name="result">Ergebnis</string>
+    <string name="neptunbeker">Geben Sie Ihre Neptun ID ein!</string>
+    <string name="neptunHint">Neptun ID hier z. B.: BATMAN</string>
+    <string name="engedelyMegtagad">Zugriff abgelehnt</string>
+    <string name="engedelyMegtagad2">Zugriff abgelehnt</string>
+    <string name="lekested">Du hast die Klasse verpasst!</string>
+    <string name="sikeresFelir">Registrierung erfolgreich</string>
+    <string name="sikeresFelir2">Sie haben sich erfolgreich für den Katalog angemeldet!\n</string>
+    <string name="gpsIdoFail">Du bist nicht auf dem College-Gelände, aber fang jetzt nicht an zu rennen!\nDu hast die Klasse verpasst!</string>
+    <string name="dv_z_lek_a_qr_catalog_ban">Willkommen im QR-Katalog!</string>
+    <string name="beolvas_s">QR-Code scannen</string>
+    <string name="itt_fognak_megjelenni_a_kurzus_adatok_beolvas_s_ut_n">Kursdaten werden hier nach dem Lesen angezeigt!</string>
+    <string name="feliratkoz_s">Anmeldung</string>
+    <string name="gpsFail">Du bist nicht auf dem College-Gelände!</string>
+    <string name="nyelv_v_ltoztat_sa">Sprache ändern</string>
+    <string name="langSelector">Sprache auswählen</string>
+</resources>

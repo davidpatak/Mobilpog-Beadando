@@ -11,6 +11,7 @@ import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Looper;
 import android.preference.PreferenceManager;
@@ -33,6 +34,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 
 import android.content.Context;
@@ -45,7 +47,12 @@ public class MainActivity extends AppCompatActivity {
     private TextView textLatLong;
     private TextView textAddress;
     private ProgressBar progressBar;
-
+    //nyelvváltáshoz
+    TextView language_dialog;
+    boolean lang_selected = true;
+    Context context;
+    Resources resources;
+    //nyelvváltó vége
 
     String valid_until = "2020/10/05/17:05:00";
     String send;
@@ -72,13 +79,11 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedpreferences = getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE);
         if (!sharedpreferences.getBoolean(prevStarted, false)) {
 
-            // Innentől az én szerencsétlenkedésem
-
             final EditText nk = new EditText(this);
-            nk.setHint("Neptun kód pl.: BATMAN");
+            nk.setHint(R.string.neptunHint);
             new AlertDialog.Builder(this)
                     .setTitle("NEPTUN")
-                    .setMessage("Add meg a neptun kódodat!")
+                    .setMessage(R.string.neptunbeker)
                     .setView(nk)
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
@@ -120,7 +125,52 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //nyelvváltáshoz
+        language_dialog=(TextView) findViewById(R.id.dialog_language);
 
+        language_dialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String[] language ={"MAGYAR","ENGLISH","GERMAN"};
+
+                int checkedItem;
+
+                if(lang_selected){
+                    checkedItem = 0; } else {
+                    checkedItem=1;
+                }
+
+                final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+
+                builder.setTitle(R.string.langSelector).setSingleChoiceItems(language, checkedItem, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        language_dialog.setText(language[which]);
+                        if(language[which].equals("MAGYAR")){
+                            context = LocaleHelper.setLocale(MainActivity.this, "hu-rHU");
+                            resources = context.getResources();
+
+                        }
+                        if(language[which].equals("ENGLISH")){
+                            context = LocaleHelper.setLocale(MainActivity.this, "en-rUS");
+                            resources = context.getResources();
+                        }
+                        if(language[which].equals("GERMAN")){
+                            context = LocaleHelper.setLocale(MainActivity.this, "de");
+                            resources = context.getResources();
+                        }
+                    }
+                }).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builder.create().show();
+            }
+        });
+        //nyelvváltás vége
         resulttextview = findViewById(R.id.qrcodetextview);
 
         scan_btn = findViewById(R.id.buttonscan);
@@ -137,10 +187,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(),ScanCodeActivity.class));
                 scantimes = scantimes+1;
-
-
             }
-
         });
 
 
@@ -149,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (scantimes == 0) {
-                    Toast.makeText(MainActivity.this, "Engedély megtagadva", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, R.string.engedelyMegtagad, Toast.LENGTH_SHORT).show();
                 }else {
 
                 String input = (String) resulttextview.getText();
@@ -183,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 getCurrentLocation();
             } else {
-                Toast.makeText(this, "Engedély megtagadva", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.engedelyMegtagad2, Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -243,18 +290,18 @@ public class MainActivity extends AppCompatActivity {
                             if (latitude > 47.086044 && latitude < 47.091333 && longitude > 17.906985 && longitude < 17.911985) {
                                 if (new Date().after(finalStrDate)) {
                                     textAddress.setText(
-                                            String.format("Lekésted az órát!\n")+neptunkod);
+                                            String.format(getString(R.string.lekested))+neptunkod);
 
                                 }
                                 else {
                                     textAddress.setText(
-                                            String.format("Sikeresen feliratkoztál a katalógusra!\n")+neptunkod);
+                                            String.format(getString(R.string.sikeresFelir2))+neptunkod);
                                     FirebaseDatabase database = FirebaseDatabase.getInstance();
                                     DatabaseReference myRef = database.getReference(send);
 
 
 
-                                    myRef.setValue("Sikeres feliratkozás");
+                                    myRef.setValue(getString(R.string.sikeresFelir));
                                 }
 
 
@@ -262,12 +309,12 @@ public class MainActivity extends AppCompatActivity {
                             } else {
                                 if (new Date().after(finalStrDate)) {
                                     textAddress.setText(
-                                            String.format("Nem vagy az egyetem területén, de már ne indulj sehova!\nAz óra végetért. ")+neptunkod);
+                                            String.format(getString(R.string.gpsIdoFail))+neptunkod);
 
                                 }
                                 else {
                                     textAddress.setText(
-                                            String.format("Nem vagy az egyetem területén!\n")+neptunkod);
+                                            String.format(getString(R.string.gpsFail))+neptunkod);
 
                                 }
                             }
